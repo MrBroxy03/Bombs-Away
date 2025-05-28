@@ -19,9 +19,12 @@ public class LevelManager : MonoBehaviour
     private float result = 0;
 
     // Start is called before the first frame update
+
+    public TextMeshProUGUI paperUI;
+
     void Start()
     {
-        numbers.Add(5);
+        numbers.Add(Mathf.Round(UnityEngine.Random.Range(1f,5f)));
 
         numbers.Add(Mathf.Round((numbers[0]+1)/2));
 
@@ -30,6 +33,8 @@ public class LevelManager : MonoBehaviour
         numbers.Add(Mathf.Round(-((numbers[2] * 2) / (numbers[1] * 2)) + 7));
 
         result = numbers[1]+numbers[1]+numbers[2]+numbers[3];
+
+        paperUI.text = "@ + @ = " + numbers[0]*2 + "\n\n @ - [x2 = -1 \n\n [x3 + @x{ = 19";
     }
     private void Update()
     {
