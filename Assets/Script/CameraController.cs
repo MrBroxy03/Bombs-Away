@@ -13,6 +13,7 @@ public class CameraController : MonoBehaviour
     public float mouseSensitivity = 2f;
     float cameraVerticalRotation = 0f;
     public float maxYCameraRotation = 70f;
+    public float itemrange = 2f;
 
     private GameObject interactableobj;
 
@@ -35,7 +36,7 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Interactable()
     {
-        Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit itemCheck, 4f);
+        Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit itemCheck, itemrange);
         if (itemCheck.collider != null && itemCheck.collider.gameObject.CompareTag("Interactable"))
         {
             interactableobj = itemCheck.collider.gameObject;
@@ -43,6 +44,7 @@ public class CameraController : MonoBehaviour
         }
         else
         {
+            interactableobj = null;
             Cursor.visible = false;
         }
     }

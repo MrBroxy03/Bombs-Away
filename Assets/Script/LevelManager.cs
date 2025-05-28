@@ -19,6 +19,9 @@ public class LevelManager : MonoBehaviour
     public TextMeshProUGUI timertext;
     private float result = 0;
 
+    public TextMeshProUGUI computertext;
+    private string pctxt;
+
     // Start is called before the first frame update
 
     public TextMeshProUGUI paperUI;
@@ -34,8 +37,38 @@ public class LevelManager : MonoBehaviour
         numbers.Add(Mathf.Round(-((numbers[2] * 2) / (numbers[1] * 2)) + 7));
 
         result = numbers[1]+numbers[1]+numbers[2]+numbers[3];
-
+        Debug.Log(result);
         paperUI.text = "@ + @ = " + numbers[0]*2 + "\n\n @ - [x2 = -1 \n\n [x3 + @x{ = 19";
+        for (int i = 0; i < letters.Length; i++) {
+            if (i == letters.Length-1)
+            {
+                pctxt += letters[i];
+            }
+            else
+            {
+                pctxt += letters[i] + " + ";
+            }
+        }
+        pctxt += " =";
+        computertext.text = pctxt;
+    }
+    public void Inputvalue(string value)
+    {
+        computertext.text = pctxt + " " +value;
+    }
+    public void CheckResult(string value)
+    {
+        float value2 = Convert.ToInt32(value);
+
+        if (value2 == result)
+        {
+            Debug.Log("Correct");
+        }
+        else
+        {
+            Debug.Log("Incorrect");
+        }
+ 
     }
     private void Update()
     {
