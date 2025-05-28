@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements.Experimental;
 
@@ -12,7 +14,7 @@ public class CameraController : MonoBehaviour
     float cameraVerticalRotation = 0f;
     public float maxYCameraRotation = 70f;
 
-    private GameObject ui;
+    private GameObject interactableobj;
 
     public bool reading = false;
     // Start is called before the first frame update
@@ -24,12 +26,11 @@ public class CameraController : MonoBehaviour
     }
     public void CloseUI()
     {
-        Debug.Log("Hi");
+        reading = false;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        reading = false;
-        ui.SetActive(false);
-        ui = null;
+        interactableobj.GetComponent<Interactable>().objectUI.SetActive(false);
+        interactableobj = null;
     }
     // Update is called once per frame
     void Interactable()
@@ -37,8 +38,7 @@ public class CameraController : MonoBehaviour
         Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit itemCheck, 4f);
         if (itemCheck.collider != null && itemCheck.collider.gameObject.CompareTag("Interactable"))
         {
-            ui = itemCheck.collider.gameObject.GetComponent<Interactable>().objectUI;
-            Debug.Log(ui);
+            interactableobj = itemCheck.collider.gameObject;
             Cursor.visible = true;
         }
         else
@@ -48,20 +48,26 @@ public class CameraController : MonoBehaviour
     }
     void Update()
     {
-        if (ui != null) { 
-            if (Input.GetKeyDown(KeyCode.Mouse0))
-            {
-                Cursor.visible = true;
-                reading = true;
-                ui.SetActive(true);
-                Cursor.lockState = CursorLockMode.None;  
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             CloseUI();
         }
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            if (interactableobj != null) { 
+            
+                Cursor.visible = true;
+                reading = true;
+                interactableobj.GetComponent<Interactable>().objectUI.SetActive(true);
+                Cursor.lockState = CursorLockMode.None;  
+
+                if (interactableobj.GetComponent<Interactable>().customTxt != null && interactableobj.GetComponent<Interactable>().customTxt != "")
+                {
+                    interactableobj.GetComponent<Interactable>().objectUI.GetComponentInChildren<TextMeshProUGUI>().text = interactableobj.GetComponent<Interactable>().customTxt;
+                }
+            }
+        }
+
 
     }
         void FixedUpdate()

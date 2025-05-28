@@ -11,6 +11,7 @@ public class LevelManager : MonoBehaviour
 {
     [SerializeField] 
     public string[] letters = { "@", "[" ,"{","%"};
+
     List<float> numbers = new List<float>();
 
     public float time = 250f;
@@ -24,7 +25,7 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
-        numbers.Add(Mathf.Round(UnityEngine.Random.Range(1f,5f)));
+        numbers.Add(Mathf.Round(5f));
 
         numbers.Add(Mathf.Round((numbers[0]+1)/2));
 
@@ -43,7 +44,7 @@ public class LevelManager : MonoBehaviour
         timertext.text = "Timer: " + Mathf.Round(time).ToString();
         if ( time <= 0)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            SceneManager.LoadScene("TitleScreen");
         }
         
     }
