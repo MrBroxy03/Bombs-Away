@@ -38,6 +38,7 @@ public class CameraController : MonoBehaviour
         if (itemCheck.collider != null && itemCheck.collider.gameObject.CompareTag("Interactable"))
         {
             ui = itemCheck.collider.gameObject.GetComponent<Interactable>().objectUI;
+            Debug.Log(ui);
             Cursor.visible = true;
         }
         else
@@ -55,6 +56,11 @@ public class CameraController : MonoBehaviour
                 ui.SetActive(true);
                 Cursor.lockState = CursorLockMode.None;  
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            CloseUI();
         }
 
     }
